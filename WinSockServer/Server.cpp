@@ -122,7 +122,7 @@ int  main(void)
             }
         } while (iResult > 0);
 
-        // here is where server shutdown loguc could be placed
+        // server shutdown 
 
     } while (1);
 
