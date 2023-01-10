@@ -80,6 +80,7 @@
   <ItemGroup>
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="ClientHelper.cpp" />
+    <ClCompile Include="UDPThread.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header.h" />
