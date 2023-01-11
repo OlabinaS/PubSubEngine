@@ -1,9 +1,13 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WinSockServer", "WinSockServer\WinSockServer.vcxproj", "{5D10DBDD-4F47-4F4A-8D0D-2F539AFE709D}"
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31129.286
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PubSubEngine", "WinSockServer\WinSockServer.vcxproj", "{5D10DBDD-4F47-4F4A-8D0D-2F539AFE709D}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WinSockClient", "WinSockClient\WinSockClient.vcxproj", "{353821A1-0ECA-48F2-88D5-8477DDE44DA6}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Subscriber", "WinSockClient\WinSockClient.vcxproj", "{353821A1-0ECA-48F2-88D5-8477DDE44DA6}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Publisher", "WinSockPublisher\WinSockPublisher.vcxproj", "{65BD310D-DDC0-430F-B1F5-B7BF9A17E8DC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,8 +23,15 @@ Global
 		{353821A1-0ECA-48F2-88D5-8477DDE44DA6}.Debug|Win32.Build.0 = Debug|Win32
 		{353821A1-0ECA-48F2-88D5-8477DDE44DA6}.Release|Win32.ActiveCfg = Release|Win32
 		{353821A1-0ECA-48F2-88D5-8477DDE44DA6}.Release|Win32.Build.0 = Release|Win32
+		{65BD310D-DDC0-430F-B1F5-B7BF9A17E8DC}.Debug|Win32.ActiveCfg = Debug|Win32
+		{65BD310D-DDC0-430F-B1F5-B7BF9A17E8DC}.Debug|Win32.Build.0 = Debug|Win32
+		{65BD310D-DDC0-430F-B1F5-B7BF9A17E8DC}.Release|Win32.ActiveCfg = Release|Win32
+		{65BD310D-DDC0-430F-B1F5-B7BF9A17E8DC}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {452E5651-94F2-4744-A0D9-AAA340EB8D98}
 	EndGlobalSection
 EndGlobal

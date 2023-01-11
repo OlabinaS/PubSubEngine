@@ -1,0 +1,5 @@
+﻿  Client.cpp
+E:\Predmeti\7. semestar\IKP\Projekat\Projekat\PubSubEngine\WinSockClient\Client.cpp(23,37): warning C4996: 'inet_addr': Use inet_pton() or InetPton() instead or define _WINSOCK_DEPRECATED_NO_WARNINGS to disable deprecated API warnings
+E:\Predmeti\7. semestar\IKP\Projekat\Projekat\PubSubEngine\WinSockClient\Client.cpp(36,17): warning C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+E:\Predmeti\7. semestar\IKP\Projekat\Projekat\PubSubEngine\WinSockClient\Client.cpp(65,19): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  WinSockClient.vcxproj -> E:\Predmeti\7. semestar\IKP\Projekat\Projekat\PubSubEngine\Debug\Subscriber.exe

@@ -10,7 +10,7 @@ void hash_map_init(hash_map* map)
 
 void hash_map_insert(hash_map* map, int key, char* topic)
 {
-    for (int i = 0; i < HASH_MAP_SIZE; i++) {
+    for (int i = map->count -1; i < HASH_MAP_SIZE; i++) {
         if (map->data[i].topic_message == NULL) {
             map->data[i].UDP_port = key;
             map->data[i].topic_message = (char*)malloc(sizeof(char) * strlen(topic) + 1);

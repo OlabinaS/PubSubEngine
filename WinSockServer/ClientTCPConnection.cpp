@@ -1,6 +1,6 @@
 #include "Header.h"
 
-DWORD WINAPI  SubscribeToTopic(LPVOID param)
+DWORD WINAPI  SubscriberTCP(LPVOID param)
 { 
     SOCKET listenSocket = INVALID_SOCKET;
     SOCKET acceptedSocket = INVALID_SOCKET;

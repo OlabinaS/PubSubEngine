@@ -3,15 +3,16 @@
 
 int  main(void) 
 {
-    HANDLE SubTCP;
+    HANDLE SubTCP, PubTCP;
 
     hash_map map;
 
     hash_map_init(&map);
 
-    SubTCP = CreateThread(0, 0, &SubscribeToTopic, &map, 0, 0);
-    //UDP slanje 
-    //TCP publisher
+    SubTCP = CreateThread(0, 0, &SubscriberTCP, &map, 0, 0);
+    PubTCP = CreateThread(0, 0, &PublisherTCP, NULL, 0, 0);
+    //ThreadPool
+    //UDP slanje klijentu
 
     CloseHandle(SubTCP);
 

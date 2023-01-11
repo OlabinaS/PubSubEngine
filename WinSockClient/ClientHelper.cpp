@@ -46,7 +46,7 @@ int CreateUniqueUDPPort()
         // Generate a random number in the range [min, max]
         port_num = rand() % (max - min + 1) + min;
 
-        if (port_num == 27016)
+        if (port_num == 27016 || port_num == 27017)
             used = true;
 
 

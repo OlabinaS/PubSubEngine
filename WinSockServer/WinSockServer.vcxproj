@@ -78,12 +78,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CircularBuffer_Impl.cpp" />
     <ClCompile Include="ClientTCPConnection.cpp" />
     <ClCompile Include="EngineHelper.cpp" />
     <ClCompile Include="HashMap_Impl.cpp" />
+    <ClCompile Include="PublisherTCPConnection.cpp" />
     <ClCompile Include="Server.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CircularBuffer.h" />
     <ClInclude Include="HashMap.h" />
     <ClInclude Include="Header.h" />
   </ItemGroup>
