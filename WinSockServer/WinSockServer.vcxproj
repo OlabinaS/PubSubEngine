@@ -80,9 +80,11 @@
   <ItemGroup>
     <ClCompile Include="ClientTCPConnection.cpp" />
     <ClCompile Include="EngineHelper.cpp" />
+    <ClCompile Include="HashMap_Impl.cpp" />
     <ClCompile Include="Server.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="HashMap.h" />
     <ClInclude Include="Header.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

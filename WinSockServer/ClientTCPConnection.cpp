@@ -1,15 +1,13 @@
 #include "Header.h"
 
 DWORD WINAPI  SubscribeToTopic(LPVOID param)
-{
-    // Socket used for listening for new subscriber 
+{ 
     SOCKET listenSocket = INVALID_SOCKET;
-    // Socket used for communication with subscriber
     SOCKET acceptedSocket = INVALID_SOCKET;
-    // variable used to store function return value
     int iResult;
-    // Buffer used for storing incoming data
-    char recvbuf[DEFAULT_BUFLEN];
+    char recvbuf[DEFAULT_SUB_BUFLEN];
+    portAndTopic data;
+    hash_map* map = (hash_map*)param;
 
     if (InitializeWindowsSockets() == false)
     {
@@ -27,7 +25,7 @@ DWORD WINAPI  SubscribeToTopic(LPVOID param)
     hints.ai_flags = AI_PASSIVE;     // 
 
     // Resolve the server address and port
-    iResult = getaddrinfo(NULL, DEFAULT_PORT, &hints, &resultingAddress);
+    iResult = getaddrinfo(NULL, DEFAULT_CLIENT_TCP_PORT, &hints, &resultingAddress);
     if (iResult != 0)
     {
         printf("getaddrinfo failed with error: %d\n", iResult);
@@ -77,10 +75,6 @@ DWORD WINAPI  SubscribeToTopic(LPVOID param)
 
     do
     {
-        // Wait for clients and accept client connections.
-        // Returning value is acceptedSocket used for further
-        // Client<->Server communication. This version of
-        // server will handle only one client.
         acceptedSocket = accept(listenSocket, NULL, NULL);
 
         if (acceptedSocket == INVALID_SOCKET)
@@ -93,27 +87,37 @@ DWORD WINAPI  SubscribeToTopic(LPVOID param)
 
         do
         {
-            // Receive data until the client shuts down the connection
-            iResult = recv(acceptedSocket, recvbuf, DEFAULT_BUFLEN, 0);
+            iResult = recv(acceptedSocket, recvbuf, DEFAULT_SUB_BUFLEN, 0);
             if (iResult > 0)
             {
-                printf("Message received from client: %s.\n", recvbuf);
+                data.topic_message = (char*)malloc(sizeof(char)*(iResult));
+                sscanf(recvbuf, "%s %d", data.topic_message, &data.UDP_port);
+
+                if (hash_map_exist(map, data.UDP_port, data.topic_message))
+                    printf("\nSubscriber are alredy subscribed on topic\n\n");
+                else
+                {
+                    printf("Topic received from client: %s.\nSend publisher message on UDP port: %d\n\n", data.topic_message, data.UDP_port);
+                    hash_map_insert(map, data.UDP_port, data.topic_message);
+                }
             }
             else if (iResult == 0)
             {
-                // connection was closed gracefully
-                printf("Connection with client closed.\n");
                 closesocket(acceptedSocket);
             }
             else
             {
-                // there was an error during recv
+                //error
                 printf("recv failed with error: %d\n", WSAGetLastError());
                 closesocket(acceptedSocket);
             }
+
+            memset(recvbuf, 0, DEFAULT_SUB_BUFLEN);
+            data.UDP_port = 0;
         } while (iResult > 0);
 
         // server shutdown 
+        //hash_map_print(map);
 
     } while (1);
 
@@ -131,6 +135,4 @@ DWORD WINAPI  SubscribeToTopic(LPVOID param)
     closesocket(listenSocket);
     closesocket(acceptedSocket);
     WSACleanup();
-
-    return 0;
 }

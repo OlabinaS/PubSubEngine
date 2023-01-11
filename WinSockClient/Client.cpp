@@ -1,50 +1,34 @@
 #define WIN32_LEAN_AND_MEAN
 
 #include <windows.h>
-//#include <winsock2.h>
 #include <ws2tcpip.h>
-#include <stdlib.h>
-//#include <stdio.h>
 #include <conio.h>
 
 #include "Header.h"
 
-#define DEFAULT_BUFLEN 512
-#define DEFAULT_PORT 27016
+#define DEFAULT_BUFFER_SIZE 32
+#define DEFAULT_TCP_PORT 27016
 
 int __cdecl main(int argc, char **argv) 
 {
     int topicNum;
-    // socket used to communicate with server
     SOCKET connectSocket = INVALID_SOCKET;
-    // variable used to store function return value
     int iResult;
-    // message to send
     char *messageToSend = "";
+    TCPMessage message;
+    char buffer[DEFAULT_BUFFER_SIZE];
 
-
-    // create a socket
-    /*connectSocket = socket(AF_INET,
-                           SOCK_STREAM,
-                           IPPROTO_TCP);
-
-    if (connectSocket == INVALID_SOCKET)
-    {
-        printf("socket failed with error: %ld\n", WSAGetLastError());
-        WSACleanup();
-        return 1;
-    }*/
-
-    // create and initialize address structure
     sockaddr_in serverAddress;
     serverAddress.sin_family = AF_INET;
     serverAddress.sin_addr.s_addr = inet_addr("127.0.0.1");
-    serverAddress.sin_port = htons(DEFAULT_PORT);
-    // connect to server specified in serverAddress and socket connectSocket
-    
-    //ConnectionToTCP(connectSocket, serverAddress);
+    serverAddress.sin_port = htons(DEFAULT_TCP_PORT);
  
-    // Send an prepared message with null terminator included
+
+    //Create Unique UDP Port for listening from publisher
+    message.UDP_port = CreateUniqueUDPPort();
+    printf("Port = %d\n\n", message.UDP_port);
+
+
     while (messageToSend != "exit")
     {
         printf("Subscribe to topic:\n1. Sport\n2. Science\n3. History\n4. Politics\n0. Exit\n");
@@ -76,18 +60,25 @@ int __cdecl main(int argc, char **argv)
         connectSocket = CreateSocket(connectSocket);
         ConnectionToTCP(connectSocket, serverAddress);
 
-        iResult = send(connectSocket, messageToSend, (int)strlen(messageToSend) + 1, 0);
+        message.topic_message = messageToSend;
+
+        int len = sprintf(buffer, "%s %d", message.topic_message, message.UDP_port);
+        //printf("Port %d\nLen %d\n\n", message.UDP_port, len);
+        iResult = send(connectSocket, buffer, len, 0);
 
         if (iResult == SOCKET_ERROR)
         {
-            printf("send failed with error: %d\n", WSAGetLastError());
+            printf("send failed with error: %d\nTry again\n", WSAGetLastError());
             continue;
         }
 
-        printf("Bytes Sent: %ld\n", iResult);
+        //printf("Bytes Sent: %ld\n", iResult);
 
         shutdown(connectSocket, SD_SEND);
         closesocket(connectSocket);
+
+        message.topic_message = "";
+        memset(buffer, 0, DEFAULT_BUFFER_SIZE);
     }
 
     // cleanup

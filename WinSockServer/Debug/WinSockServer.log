@@ -1,3 +1,3 @@
-﻿  Server.cpp
-E:\Predmeti\7. semestar\IKP\Projekat\Projekat\PubSubEngine\WinSockServer\Server.cpp(14,5): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _getch. See online help for details.
+﻿  ClientTCPConnection.cpp
+E:\Predmeti\7. semestar\IKP\Projekat\Projekat\PubSubEngine\WinSockServer\ClientTCPConnection.cpp(94,17): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   WinSockServer.vcxproj -> E:\Predmeti\7. semestar\IKP\Projekat\Projekat\PubSubEngine\Debug\PubSubEngine.exe

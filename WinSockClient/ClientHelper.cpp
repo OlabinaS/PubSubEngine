@@ -31,6 +31,31 @@ SOCKET CreateSocket(SOCKET connectSocket)
     return connectSocket;
 }
 
+int CreateUniqueUDPPort()
+{
+    int min = 10000;
+    int max = 40000;
+    int port_num = 25000;
+    bool used;
+    do
+    {
+        used = false;
+        // Seed the random number generator
+        srand(time(0));
+
+        // Generate a random number in the range [min, max]
+        port_num = rand() % (max - min + 1) + min;
+
+        if (port_num == 27016)
+            used = true;
+
+
+    } while (used);
+
+    return port_num;
+}
+
+
 bool InitializeWindowsSockets()
 {
     WSADATA wsaData;
