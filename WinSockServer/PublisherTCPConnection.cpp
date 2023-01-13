@@ -7,7 +7,7 @@ DWORD WINAPI  PublisherTCP(LPVOID param)
     int iResult;
     char recvbuf[DEFAULT_PUB_BUFLEN];
     topic_and_text data;
-    circular_buffer* buffer = (circular_buffer*)NULL;
+    circular_buffer* buffer = (circular_buffer*)param;
 
     if (InitializeWindowsSockets() == false)
     {
@@ -98,7 +98,8 @@ DWORD WINAPI  PublisherTCP(LPVOID param)
                 data.text = strtok(NULL, "|^&");
                 
                 printf("Topic received from Publisher: %s.\n%s\n", data.topic, data.text);
-                //hash_map_insert(map, data.UDP_port, data.topic_message);
+                // Adding text to circular buffer
+                addMessage(buffer, data.text, data.topic);
                 
             }
             else if (iResult == 0)

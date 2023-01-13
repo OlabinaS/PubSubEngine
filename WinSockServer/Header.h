@@ -5,7 +5,6 @@
 #include "HashMap.h"
 #include "CircularBuffer.h"
 
-#define DEFAULT_PUB_BUFLEN 1024
 #define DEFAULT_SUB_BUFLEN 32
 #define DEFAULT_CLIENT_TCP_PORT "27016"
 #define DEFAULT_PUB_TCP_PORT "27017"

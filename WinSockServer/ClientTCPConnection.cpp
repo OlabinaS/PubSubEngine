@@ -85,6 +85,8 @@ DWORD WINAPI  SubscriberTCP(LPVOID param)
             return 1;
         }
 
+        
+
         do
         {
             iResult = recv(acceptedSocket, recvbuf, DEFAULT_SUB_BUFLEN, 0);
