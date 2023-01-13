@@ -1,4 +1,4 @@
-#include "Header.h"
+#include "HeaderENG.h"
 
 DWORD WINAPI  PublisherTCP(LPVOID param)
 {
@@ -98,8 +98,12 @@ DWORD WINAPI  PublisherTCP(LPVOID param)
                 data.text = strtok(NULL, "|^&");
                 
                 printf("Topic received from Publisher: %s.\n%s\n", data.topic, data.text);
+
                 // Adding text to circular buffer
-                addMessage(buffer, data.text, data.topic);
+
+                EnterCriticalSection(&cs);
+                    addMessage(buffer, data.text, data.topic);
+                LeaveCriticalSection(&cs);
                 
             }
             else if (iResult == 0)

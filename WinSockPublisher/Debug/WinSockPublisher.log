@@ -4,4 +4,6 @@ E:\Predmeti\7. semestar\IKP\Projekat\Projekat\PubSubEngine\WinSockPublisher\Pub.
 E:\Predmeti\7. semestar\IKP\Projekat\Projekat\PubSubEngine\WinSockPublisher\Pub.cpp(34,17): warning C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
 E:\Predmeti\7. semestar\IKP\Projekat\Projekat\PubSubEngine\WinSockPublisher\Pub.cpp(69,9): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
 E:\Predmeti\7. semestar\IKP\Projekat\Projekat\PubSubEngine\WinSockPublisher\Pub.cpp(72,19): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  PubHelper.cpp
+  Generating Code...
   WinSockPublisher.vcxproj -> E:\Predmeti\7. semestar\IKP\Projekat\Projekat\PubSubEngine\Debug\Publisher.exe

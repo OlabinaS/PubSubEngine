@@ -14,8 +14,8 @@ void freeCircularBuffer(circular_buffer* cb) {
         free(cb->data[i].text);
         free(cb->data[i].topic);
     }
-    free(cb->data);
-    free(cb);
+    //free(cb->data);
+    //free(cb);
 }
 
 void addMessage(circular_buffer* cb, char* text, char* topic) {

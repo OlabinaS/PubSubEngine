@@ -4,7 +4,7 @@
 #include <ws2tcpip.h>
 #include <conio.h>
 
-#include "Header.h"
+#include "HeaderPUB.h"
 
 #define DEFAULT_BUFFER_SIZE 1024
 #define DEFAULT_TCP_PORT 27017
