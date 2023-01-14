@@ -58,7 +58,6 @@ DWORD WINAPI  SubscriberTCP(LPVOID param)
         return 1;
     }
 
-    // Since we don't need resultingAddress any more, free it
     freeaddrinfo(resultingAddress);
 
     // Set listenSocket in listening mode
@@ -99,7 +98,7 @@ DWORD WINAPI  SubscriberTCP(LPVOID param)
                     printf("\nSubscriber are alredy subscribed on topic\n\n");
                 else
                 {
-                    printf("Topic received from client: %s.\nSend publisher message on UDP port: %d\n\n", data.topic_message, data.UDP_port);
+                    printf("Topic received from client: %s.\nSend publisher's message on UDP port: %d\n\n", data.topic_message, data.UDP_port);
                     hash_map_insert(map, data.UDP_port, data.topic_message);
                 }
             }
@@ -121,7 +120,7 @@ DWORD WINAPI  SubscriberTCP(LPVOID param)
         // server shutdown 
         //hash_map_print(map);
 
-    } while (1);
+    } while (!StopWorking);
 
     // shutdown the connection since we're done
     iResult = shutdown(acceptedSocket, SD_SEND);

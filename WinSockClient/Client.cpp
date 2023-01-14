@@ -9,6 +9,8 @@
 #define DEFAULT_BUFFER_SIZE 32
 #define DEFAULT_TCP_PORT 27016
 
+bool stopUDPListener = false;
+
 int __cdecl main(int argc, char **argv) 
 {
     int topicNum;
@@ -25,8 +27,13 @@ int __cdecl main(int argc, char **argv)
  
 
     //Create Unique UDP Port for listening from publisher
-    message.UDP_port = CreateUniqueUDPPort();
-    printf("Port = %d\n\n", message.UDP_port);
+    int UDP_port = CreateUniqueUDPPort();
+    message.UDP_port = UDP_port;
+    //printf("Port = %d\n\n", message.UDP_port);
+
+    //Waiting for publisher
+    HANDLE UDP;
+    UDP = CreateThread(0, 0, &UDP_thread, (LPVOID)UDP_port, 0, 0);
 
 
     while (messageToSend != "exit")
@@ -57,7 +64,7 @@ int __cdecl main(int argc, char **argv)
         if (messageToSend == "continue")
             continue;
 
-        connectSocket = CreateSocket(connectSocket);
+        connectSocket = CreateTCPSocket(connectSocket);
         ConnectionToTCP(connectSocket, serverAddress);
 
         message.topic_message = messageToSend;
@@ -81,9 +88,13 @@ int __cdecl main(int argc, char **argv)
         memset(buffer, 0, DEFAULT_BUFFER_SIZE);
     }
 
+    stopUDPListener = true;
+
     // cleanup
     closesocket(connectSocket);
     WSACleanup();
+
+    Sleep(1000);
 
     return 0;
 }

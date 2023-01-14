@@ -26,12 +26,13 @@ int* hash_map_search(hash_map* map, char* topic)
 {
     int* keys = (int*)malloc(sizeof(int) * map->count);
     int j = 0;
-    for (int i = 0; i < map->count +1; i++) {
+    for (int i = 0; i < map->count; i++) {
         if (map->data[i].topic_message != NULL && strcmp(map->data[i].topic_message, topic) == 0) {
             keys[j] = map->data[i].UDP_port;
             j++;
         }
     }
+
     return keys;
 }
 

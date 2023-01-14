@@ -91,16 +91,17 @@ DWORD WINAPI  PublisherTCP(LPVOID param)
             {
                 data.topic = (char*)malloc(sizeof(char) * 16);
                 data.text = (char*)malloc(sizeof(char) * (iResult));
+
+
                 //sscanf(recvbuf, "%s %s", data.topic, data.text);
                 //memcpy(&data, recvbuf, sizeof(data));
-
                 data.topic = strtok(recvbuf, " ");
                 data.text = strtok(NULL, "|^&");
                 
+
                 printf("Topic received from Publisher: %s.\n%s\n", data.topic, data.text);
 
                 // Adding text to circular buffer
-
                 EnterCriticalSection(&cs);
                     addMessage(buffer, data.text, data.topic);
                 LeaveCriticalSection(&cs);
@@ -121,10 +122,9 @@ DWORD WINAPI  PublisherTCP(LPVOID param)
 
         } while (iResult > 0);
 
-        // server shutdown 
         //circular_buffer_print(buffer);
 
-    } while (1);
+    } while (!StopWorking);
 
     // shutdown the connection since we're done
     iResult = shutdown(acceptedSocket, SD_SEND);

@@ -19,6 +19,9 @@
     <ClCompile Include="HashMap_Impl.cpp">
       <Filter>DataStorage</Filter>
     </ClCompile>
+    <ClCompile Include="SendMessageToSUB.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CircularBuffer.h">

@@ -1,75 +1,142 @@
-/*#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <string.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-#include <pthread.h>
+#include "HeaderSUB.h"
 
-void* udp_thread(void* arg) {
-    int sockfd;
-    struct sockaddr_in serv_addr, cli_addr;
-    socklen_t clilen;
-    char buffer[1024];
+DWORD WINAPI UDP_thread(LPVOID param) {
+    sockaddr_in serverAddress;
+    int port = (int)param;
+    int sockAddrLen = sizeof(struct sockaddr);
+    char accessBuffer[BUFFER_SIZE];
+    int iResult;
 
-    // Create a socket
-    sockfd = socket(AF_INET, SOCK_DGRAM, 0);
-    if (sockfd < 0) {
-        perror("ERROR opening socket");
-        exit(1);
+
+    UDPMessage data;
+
+
+    printf("Listening on port: %d\n", port);
+
+    if (InitializeWindowsSockets() == false)
+    {
+        return 1;
     }
 
-    // Initialize the server address structure
-    memset(&serv_addr, 0, sizeof(serv_addr));
-    serv_addr.sin_family = AF_INET;
-    serv_addr.sin_port = htons(port);
-    serv_addr.sin_addr.s_addr = INADDR_ANY;
+    memset((char*)&serverAddress, 0, sizeof(serverAddress));
+    serverAddress.sin_family = AF_INET; //set server address protocol family
+    serverAddress.sin_addr.s_addr = INADDR_ANY;
+    serverAddress.sin_port = htons(port);
 
-    // Bind the socket to the address and port
-    if (bind(sockfd, (struct sockaddr*)&serv_addr, sizeof(serv_addr)) < 0) {
-        perror("ERROR on binding");
-        exit(1);
+    // create UDP socket
+    SOCKET serverSocket = socket(AF_INET,      // IPv4 address famly
+                                 SOCK_DGRAM,   // datagram socket
+                                 IPPROTO_UDP); // UDP
+
+    if (serverSocket == INVALID_SOCKET)
+    {
+        printf("Creating socket failed with error: %d\n", WSAGetLastError());
+        WSACleanup();
+        return 1;
     }
 
-    // Set the size of the client address structure
-    clilen = sizeof(cli_addr);
+    iResult = bind(serverSocket, (LPSOCKADDR)&serverAddress, sizeof(serverAddress));
 
-    while (1) {
-        // Receive data from the client
-        int n = recvfrom(sockfd, buffer, 1024, 0, (struct sockaddr*)&cli_addr, &clilen);
-        if (n < 0) {
-            perror("ERROR reading from socket");
-            exit(1);
+    if (iResult == SOCKET_ERROR)
+    {
+        printf("Socket bind failed with error: %d\n", WSAGetLastError());
+        closesocket(serverSocket);
+        WSACleanup();
+        return 1;
+    }
+
+
+    unsigned long int nonBlockingMode = 1;
+    iResult = ioctlsocket(serverSocket, FIONBIO, &nonBlockingMode);
+
+    if (iResult == SOCKET_ERROR)
+    {
+        printf("ioctlsocket failed with error: %ld\n", WSAGetLastError());
+        return 1;
+    }
+
+
+    while (!stopUDPListener)
+    {
+        //
+        sockaddr_in clientAddress;
+        memset(&clientAddress, 0, sizeof(sockaddr_in));
+        //
+
+
+        memset(accessBuffer, 0, BUFFER_SIZE);
+
+        FD_SET set;
+        timeval timeVal;
+
+        FD_ZERO(&set);
+        FD_SET(serverSocket, &set);
+
+        timeVal.tv_sec = 0;
+        timeVal.tv_usec = 0;
+
+        iResult = select(0 , &set, NULL, NULL, &timeVal);
+
+        if (iResult == SOCKET_ERROR)
+        {
+            fprintf(stderr, "select failed with error: %ld\n", WSAGetLastError());
+            continue;
         }
 
-        // Print the received data
-        printf("Received message: %s\n", buffer);
-
-        // Send data back to the client
-        n = sendto(sockfd, buffer, strlen(buffer), 0, (struct sockaddr*)&cli_addr, clilen);
-        if (n < 0) {
-            perror("ERROR writing to socket");
-            exit(1);
+        if (iResult == 0)
+        {
+            // there are no ready sockets, sleep for a while and check again
+            Sleep(SLEEP_TIME);
+            continue;
         }
+
+        // receive client message
+        iResult = recvfrom(serverSocket,
+                            accessBuffer,
+                            BUFFER_SIZE,
+                            0,
+                            (LPSOCKADDR)&clientAddress,
+                            &sockAddrLen);
+
+        if (iResult == SOCKET_ERROR)
+        {
+            printf("recvfrom failed with error: %d\n", WSAGetLastError());
+            continue;
+        }
+
+        ///111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
+        char ipAddress[16];
+        // copy client ip to local char[]
+        strcpy_s(ipAddress, sizeof(ipAddress), inet_ntoa(clientAddress.sin_addr));
+        // convert port number from TCP/IP byte order to
+        // little endian byte order
+        int clientPort = ntohs((u_short)clientAddress.sin_port);
+
+        data.topic = (char*)malloc(sizeof(char) * 16);
+        data.text = (char*)malloc(sizeof(char) * (iResult));
+
+        data.topic = strtok(accessBuffer, " ");
+        data.text = strtok(NULL, "|^&");
+
+        printf("Engine connected from ip: %s, port: %d\nTopic: %s\n\n%s\n\n", ipAddress, clientPort, data.topic, data.text);
+
     }
-}
-/*
-int main(int argc, char* argv[]) {
-    pthread_t thread;
-    int rc;
 
-    // Create the UDP thread
-    rc = pthread_create(&thread, NULL, udp_thread, NULL);
-    if (rc) {
-        perror("ERROR creating thread");
-        exit(1);
+
+    iResult = closesocket(serverSocket);
+    if (iResult == SOCKET_ERROR)
+    {
+        printf("closesocket failed with error: %ld\n", WSAGetLastError());
+        return 1;
     }
 
-    // Wait for the thread to finish
-    pthread_join(thread, NULL);
+    iResult = WSACleanup();
+    if (iResult == SOCKET_ERROR)
+    {
+        printf("WSACleanup failed with error: %ld\n", WSAGetLastError());
+        return 1;
+    }
 
+    printf("UDP Listener successfully shut down.\n");
     return 0;
 }
-*/

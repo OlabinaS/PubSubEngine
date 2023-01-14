@@ -3,13 +3,18 @@
 #include <stdlib.h>
 #include <time.h>
 
+#define BUFFER_SIZE 1024
+#define SLEEP_TIME 50
+
+extern bool stopUDPListener;
+
 bool InitializeWindowsSockets();
 bool ConnectionToTCP(SOCKET connectSocket, sockaddr_in serverAddress);
 
-SOCKET CreateSocket(SOCKET connectSocket);
+SOCKET CreateTCPSocket(SOCKET connectSocket);
 
 int CreateUniqueUDPPort();
-
+DWORD WINAPI UDP_thread(LPVOID param);
 
 struct TCPMessage
 {
@@ -17,3 +22,8 @@ struct TCPMessage
 	char* topic_message;
 };
 
+struct UDPMessage
+{
+	char* topic;
+	char* text;
+};

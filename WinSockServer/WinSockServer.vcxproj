@@ -83,6 +83,7 @@
     <ClCompile Include="EngineHelper.cpp" />
     <ClCompile Include="HashMap_Impl.cpp" />
     <ClCompile Include="PublisherTCPConnection.cpp" />
+    <ClCompile Include="SendMessageToSUB.cpp" />
     <ClCompile Include="Server.cpp" />
   </ItemGroup>
   <ItemGroup>

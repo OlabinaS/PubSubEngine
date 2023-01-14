@@ -9,7 +9,8 @@ void CircularBuffer_Init(circular_buffer* cb)
     cb->size = 0;
 }
 
-void freeCircularBuffer(circular_buffer* cb) {
+void freeCircularBuffer(circular_buffer* cb)
+{
     for (int i = 0; i < CIRCULAR_BUFFER_SIZE; i++) {
         free(cb->data[i].text);
         free(cb->data[i].topic);
@@ -18,7 +19,8 @@ void freeCircularBuffer(circular_buffer* cb) {
     //free(cb);
 }
 
-void addMessage(circular_buffer* cb, char* text, char* topic) {
+void addMessage(circular_buffer* cb, char* text, char* topic)
+{
     if (cb->size == CIRCULAR_BUFFER_SIZE) {
         // Overwrite oldest data
         free(cb->data[cb->head].text);
@@ -36,7 +38,8 @@ void addMessage(circular_buffer* cb, char* text, char* topic) {
     cb->tail = (cb->tail + 1) % CIRCULAR_BUFFER_SIZE;
 }
 
-topic_and_text* getMessage(circular_buffer* cb) {
+topic_and_text* getMessage(circular_buffer* cb)
+{
     if (cb->head == cb->tail) {
         // buffer is empty
         return NULL;

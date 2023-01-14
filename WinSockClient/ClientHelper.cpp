@@ -14,7 +14,7 @@ bool ConnectionToTCP(SOCKET connectSocket, sockaddr_in serverAddress)
     return true;
 }
 
-SOCKET CreateSocket(SOCKET connectSocket)
+SOCKET CreateTCPSocket(SOCKET connectSocket)
 {
     InitializeWindowsSockets();
 
