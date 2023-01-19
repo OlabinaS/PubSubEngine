@@ -1,0 +1,7 @@
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(519,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (Subscriber.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  Pub.cpp
+E:\Predmeti\7. semestar\IKP\Projekat\Projekat\PubSubEngine\WinSockPublisher\Pub.cpp(26,37): warning C4996: 'inet_addr': Use inet_pton() or InetPton() instead or define _WINSOCK_DEPRECATED_NO_WARNINGS to disable deprecated API warnings
+E:\Predmeti\7. semestar\IKP\Projekat\Projekat\PubSubEngine\WinSockPublisher\Pub.cpp(34,17): warning C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+E:\Predmeti\7. semestar\IKP\Projekat\Projekat\PubSubEngine\WinSockPublisher\Pub.cpp(69,9): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+E:\Predmeti\7. semestar\IKP\Projekat\Projekat\PubSubEngine\WinSockPublisher\Pub.cpp(72,19): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  WinSockPublisher.vcxproj -> E:\Predmeti\7. semestar\IKP\Projekat\Projekat\PubSubEngine\Debug\Publisher.exe

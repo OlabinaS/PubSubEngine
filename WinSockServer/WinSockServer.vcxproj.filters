@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="ClientTCPConnection.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineHelper.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="PublisherTCPConnection.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Server.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="CircularBuffer_Impl.cpp">
+      <Filter>DataStorage</Filter>
+    </ClCompile>
+    <ClCompile Include="HashMap_Impl.cpp">
+      <Filter>DataStorage</Filter>
+    </ClCompile>
+    <ClCompile Include="SendMessageToSUB.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CircularBuffer.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="HashMap.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="HeaderENG.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header">
+      <UniqueIdentifier>{47eb087c-cdee-4234-ac4e-a81b3b5f2e6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source">
+      <UniqueIdentifier>{e2653d89-7d01-4938-ae3f-5e4e41be1e30}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DataStorage">
+      <UniqueIdentifier>{930f31da-8e10-4d22-a783-ef68605bed04}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
